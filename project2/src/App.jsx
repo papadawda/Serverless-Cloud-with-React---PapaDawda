@@ -1,35 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
+import Addition from './Addition';
+import Subtraction from './Subtraction';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h3>Addition</h3>
+      <Addition numberOne={12} numberTwo={8} />
+      <Addition numberOne={5456} numberTwo={738} />
+      <Addition numberOne={1223} numberTwo={738} />
+
+      <h3>Subtraction</h3>
+      <Subtraction numberOne={5637} numberTwo={2344} />
+      <Subtraction numberOne={7} numberTwo={12} />
+      <Subtraction numberOne={3000} numberTwo={847} />
+    </div>
+  );
 }
 
-export default App
+export default App;
