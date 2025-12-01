@@ -2,8 +2,10 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
-  background: periwinkle:
+  /* text-align: center; */
+  background: #CCCCFF;
+  color: #123;
+  
 }
 
 .logo {

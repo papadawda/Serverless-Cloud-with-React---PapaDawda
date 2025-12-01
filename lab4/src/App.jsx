@@ -7,17 +7,17 @@ function App() {
     {
       name: 'Juan',
       favoriteNumber: 9,
-      favoriteColor: ['green', 'blue', 'purple'],
+      favoriteColors: ['green', 'blue', 'purple'],
     },
     {
       name: 'Ivy',
       favoriteNumber: 43,
-      favoriteColor: [],
+      favoriteColors: null,
     },
     {
       name: 'Kia',
       favoriteNumber: 34,
-      favoriteColor: [],
+      favoriteColors: null,
     }
   ]
   
