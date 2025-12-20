@@ -3,73 +3,71 @@ import React, { useState, useEffect } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
 import { HomeOutlined, UserOutlined, ProfileOutlined } from '@ant-design/icons'
-import { Hub } from 'aws-amplify'
+import { Hub } from 'aws-amplify/utils'
 import checkUser from './checkUser'
 
 const getNavLinks = (isAdmin) => {
-    const navlinks = [
-        {
-            key: 'Home',
-            label: (
-                <Link to="/">
-                    <HomeOutlined/>
-                    Home
-                </Link>
-            )
-        },
-        {
-            key: 'profile',
-            label: (
-                <Link to="/">
-                    <ProfileOutlined/>
-                    Profile
-                </Link>
-            )
-        }
-    ]
-    if (isAdmin) {
-        navlinks.push({
-            key: 'admin',
-            label: (
-                <Link to="/admin">
-                    <ProfileOutlined/>
-                    Admin
-                </Link>
-            )
-        })
+const navLinks = [
+    {
+    key: 'Home',
+    label: (
+        <Link to="/">
+            <HomeOutlined/>
+            Home
+        </Link>
+    )
+    },
+    {
+      key: 'profile',
+      label: (
+        <Link to="/profile">
+            <ProfileOutlined/>
+            Profile
+        </Link>
+    )
     }
-
-    return navlinks;
-}
-
-
-const Nav = () => {
-  const { selectedPage, setSelectedPage } = useState('home');
-  const location = useLocation();
-
-  const [user, updateUser] = useState({})
-
-  useEffect(() => {
-//
-    checkUser(updateUser)
-    Hub.listen('auth', (data) => {
-      const { payload: { event } } = data;
-      console.log('event: ', event)
-      if (event === 'signIn' || event === 'signOut') checkUser(updateUser)
+]
+if (isAdmin) {
+    navLinks.push({
+        key: 'admin',
+        label: (
+        <Link to="/admin">
+            <UserOutlined/>
+            Admin
+        </Link>
+        )
     })
 
-    const currentPage = location.pathname.split('/')[1];
-    console.log('Current Page is: ',location)
-    setSelectedPage(currentPage ? currentPage : 'home')
+}
 
-  }, [location])
+return navLinks;
+}
 
-  return (
-    <>
-      <Menu items={getNavLinks(user.isAuthorized)} selectedKeys={[selectedPage]} mode="horizontal"/>
-        <Outlet/>
-   </>
-  )
+const Nav = () => {
+    const [ selectedPage, setSelectedPage ] = useState('home');
+    const location = useLocation();
+
+    const [user, updateUser] = useState({})
+    useEffect(() => {
+        // see if the user is authorized and listen for login
+        checkUser(updateUser)
+        Hub.listen('auth', (data) => {
+        const { payload: { event } } = data;
+        console.log('event: ', event)
+        if (event === 'signIn' || event === 'signOut') checkUser(updateUser)
+        })
+
+        const currentPage = location.pathname.split('/')[1];
+        console.log('Current Page is: ', location)
+        setSelectedPage(currentPage ? currentPage : 'home')
+    }, [location])
+
+    return (
+        <>
+            <Menu items={getNavLinks(user.isAuthorized)} selectedKeys={[selectedPage]}/>
+            <Outlet/>
+        </>
+    )
 }
 
 export default Nav
