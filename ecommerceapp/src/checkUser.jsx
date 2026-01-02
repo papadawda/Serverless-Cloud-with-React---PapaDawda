@@ -12,6 +12,7 @@ try {
     }
 
     const { idToken: { payload }} = userData.tokens
+    console.log('groups:', payload['cognito:groups'])
     const isAuthorized =
         payload['cognito:groups'] &&
         payload['cognito:groups'].includes('Admin')
